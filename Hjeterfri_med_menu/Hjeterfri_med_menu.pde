@@ -13,9 +13,14 @@ boolean menu=true;
 boolean singleplayer=false;
 boolean multiplayer=false;
 
+PImage ag;
+
+
 void setup() {
   frameRate(30);
   size(800, 600);
+  ag = loadImage("ag.jpg");
+  
   bunke = new StringList(); //her bliver bunke defineret og nedenunder er der er for loop der sætter det op
 
   for (int x=0; x<13; x++) { //det her for loop sætter strings ind i bunke der består af kulør og emblem. Emblem bliver sat op med 13.
@@ -115,6 +120,7 @@ void drawMultiPlayer() { //Multiplayer draw funktionen fungerer ligesom singlepl
 
 void draw() {
   if (menu) { //menu er det eneste der sker uden en funktion. Der bliver i stedet brugt et if-statement
+     image(ag, 0, 0);
     rect(50, 50, 400, 50); //de to rects er to knappre
     rect(50, 110, 400, 50);
     if (mousePressed&&mouseX>50&mouseX<450&mouseY>50&mouseY<100) { //når knapperne bliver trykket er hhv. single- og multiplayer sande
