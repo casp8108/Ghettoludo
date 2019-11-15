@@ -1,5 +1,5 @@
 String[]kuloer = {"Hjerter", "Spar", "Kløver", "Ruder"};
-String[]emblem = {"Es", "Konge", "Dronning", "Knægt", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
+String[]emblem = {"A", "Konge", "Dronning", "Knægt", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
 StringList bunke; //bunke er en stringlist der bliver forklaret senere i setup
 
 int kortnummer; //tidligere traktor, den går op med 1 hver gang et kort trækkes, og bruges til at diktere hvilket kort vi er ved i bunken ud af de 52
@@ -79,13 +79,20 @@ void drawCard() { //det her er draw card funktionen der trækker et kort
 
   if (bunke.get(kortnummer).indexOf("Hjerter")==0) { //hvis hjerter bliver trukket
     hftidspunkt = frameCount; //hftidspunkt er frameCount når hjertet bliver trukket
-    compDelay = (int)random(20, 100); //og compDelay, som er det CPUens reaktionstid er bliver sat mellem 20 og 100 frames
+    compDelay = (int)random(20, 50); //og compDelay, som er det CPUens reaktionstid er bliver sat mellem 20 og 100 frames
+  }
+
+  if (kortnummer>51) {
+    menu=true;
+    singleplayer=false;
+    multiplayer=false;
+    kortnummer = 0;
   }
 }
 
 void drawSinglePlayer() { //det her er ligesom en draw funktion, bare at den kun kører når der spilles singleplayer.
   drawDelay++; //drawDelay er hvor mange frames før det næste kort trækkes. Det er normalt 101 frames fordi 
-  if (drawDelay==101) { //hvis drawDelay er 101
+  if (drawDelay==100) { //hvis drawDelay er 101
     drawCard(); //kort trækkes
     drawDelay=0; //og drawDelay reset
   }
@@ -95,13 +102,16 @@ void drawSinglePlayer() { //det her er ligesom en draw funktion, bare at den kun
     println("computer banker i bordet!");
     player2Points++; //CPUens point 
     compDelay=0;
+    kortikkebanket=false;
   }
 
   clear();
   background(25, 25, 112);
   textSize(32);
-  image(card, 100, 100, 300, 450);
-  text("du har "+player1Points+" cpu har "+player2Points, 100, 50);
+  textAlign(LEFT);
+  image(card, 250, 50, 300, 500);
+  text("du har "+player1Points, 50, 50);
+  text("cpu har "+player2Points, 600, 50);
 }
 
 void drawTutorial() {
@@ -126,29 +136,41 @@ void drawMultiPlayer() { //Multiplayer draw funktionen fungerer ligesom singlepl
 
   clear();
   background(0, 100, 0);
-  image(card, 100, 100, 300, 450);
+  image(card, 250, 50, 300, 500);
   textSize(32);
-  text("spiller 1 har "+player1Points+"\nspiller 2 har "+player2Points, 500, 100);
+  textAlign(LEFT);
+  text("spiller 1 har \n"+player1Points, 50, 100);
+  text("spiller 2 har \n"+player2Points, 560, 100);
 }
 
 void draw() {
   card = loadImage(bunke.get(kortnummer)+".jpg");
   if (menu) { //menu er det eneste der sker uden en funktion. Der bliver i stedet brugt et if-statement
     image(ag, 0, 0);
-    textSize(32);
-    text("Ghettoludo", 500, 90);
-    rect(50, 50, 400, 50); //de rects er to knappre
-    rect(50, 110, 400, 50);
-    rect(50, 170, 400, 50);
-    if (mousePressed&&mouseX>50&mouseX<450&mouseY>50&mouseY<100) { //når knapperne bliver trykket er hhv. single- og multiplayer sande
+    textSize(90);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Ghettoludo", 400, 90);
+
+    rect(100, 150, 600, 100); //Rects der fungerer som knapper
+    rect(100, 260, 600, 100);
+    rect(100, 370, 600, 100);
+
+    textSize(72);
+    fill(255);
+    text("Singleplayer", 400, 200);
+    text("Multiplayer", 400, 310);
+    text("Tutorial", 400, 420);
+
+    if (mousePressed&&mouseX>100&mouseX<700&mouseY>150&mouseY<250) { //når knapperne bliver trykket er hhv. single- og multiplayer sande
       singleplayer=true;
       menu=false;
     }
-    if (mousePressed&&mouseX>50&mouseX<450&mouseY>110&mouseY<160) {
+    if (mousePressed&&mouseX>100&mouseX<700&mouseY>260&mouseY<360) {
       multiplayer=true;
       menu=false;
     }
-    if (mousePressed&&mouseX>50&mouseX<450&mouseY>170&mouseY<220) {
+    if (mousePressed&&mouseX>100&mouseX<700&mouseY>370&mouseY<470) {
       tutorial=true;
       menu=false;
     }
