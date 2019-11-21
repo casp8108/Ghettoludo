@@ -93,7 +93,7 @@ void drawCard() { //det her er draw card funktionen der trækker et kort
 
   if (bunke.get(kortnummer).indexOf("Hjerter")==0) { //hvis hjerter bliver trukket
     hftidspunkt = frameCount; //hftidspunkt er frameCount når hjertet bliver trukket
-    compDelay = (int)random(10, 30); //og compDelay, som er det CPUens reaktionstid er bliver sat mellem 10 og 30 frames
+    compDelay = (int)random(10, 13); //og compDelay, som er det CPUens reaktionstid er bliver sat mellem 10 og 30 frames
   }
 }
 
